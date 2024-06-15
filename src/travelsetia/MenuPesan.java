@@ -3,6 +3,19 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package travelsetia;
+import java.awt.Color;
+import javax.swing.JOptionPane;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.ListSelectionModel;
+import javax.swing.RowFilter;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.TableRowSorter;
+
 
 /**
  *
@@ -10,12 +23,65 @@ package travelsetia;
  */
 public class MenuPesan extends javax.swing.JFrame {
 
-    /**
-     * Creates new form MenuPesan
-     */
-    public MenuPesan() {
+    
+    
+    private Connection conn;
+     private String bandaraKeberangkatan;
+    private String bandaraTujuan;
+    private String namaPesawat;
+    private String tanggalKeberangkatan;
+    private String totalHarga;
+    private int idPenerbangan; // Ensure this is set correctly in your actual code
+    private int kursiTersedia;
+    private int jumlahTiket;
+
+    public MenuPesan(String bandaraKeberangkatan, String bandaraTujuan, String namaPesawat,
+                     String tanggalKeberangkatan, String totalHarga, int kursiTersedia,
+                     int jumlahTiket, String statusKursi, int idPenerbangan) {
         initComponents();
+        this.bandaraKeberangkatan = bandaraKeberangkatan;
+        this.bandaraTujuan = bandaraTujuan;
+        this.namaPesawat = namaPesawat;
+        this.tanggalKeberangkatan = tanggalKeberangkatan;
+        this.totalHarga = totalHarga;
+        this.kursiTersedia = kursiTersedia;
+        this.jumlahTiket = jumlahTiket;
+        this.idPenerbangan = idPenerbangan;
+        // Set idPenerbangan accordingly if needed
+        
+        
+        conn = Koneksi.bukaKoneksi();
+        // Example usage to display data in labels
     }
+
+    private void prosesBooking() {
+        if (kursiTersedia >= jumlahTiket) {
+            int kursiBaru = kursiTersedia - jumlahTiket;
+            updateKursiTersedia(idPenerbangan, kursiBaru);
+            JOptionPane.showMessageDialog(this, "Booking berhasil!");
+        } else {
+            JOptionPane.showMessageDialog(this, "Maaf, kursi untuk penerbangan ini sudah habis.", "Peringatan", JOptionPane.WARNING_MESSAGE);
+        }
+    }
+
+    private void updateKursiTersedia(int idPenerbangan, int kursiTersedia) {
+        if (conn != null){
+             String sqlUpdate = "UPDATE kapasitas_kursi SET kursiTersedia = ? WHERE idPenerbangan = ?";
+        try {
+            PreparedStatement pst = conn.prepareStatement(sqlUpdate);
+            pst.setInt(1, kursiTersedia);
+            pst.setInt(2, idPenerbangan);
+            pst.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Error updating available seats: " + e.getMessage());
+        }
+        }
+
+    }
+
+    
+
+   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -371,6 +437,11 @@ public class MenuPesan extends javax.swing.JFrame {
         jPanel1.add(btnRiwayat, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 400, 150, 30));
 
         jToggleButton1.setText("Bayar");
+        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton1ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jToggleButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 360, 150, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -420,6 +491,10 @@ public class MenuPesan extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
+    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
+       prosesBooking();
+    }//GEN-LAST:event_jToggleButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -450,7 +525,7 @@ public class MenuPesan extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MenuPesan().setVisible(true);
+                new MenuPesann().setVisible(true);
             }
         });
     }
@@ -493,4 +568,14 @@ public class MenuPesan extends javax.swing.JFrame {
     private javax.swing.JLabel labelUpdateKursi;
     private javax.swing.JLabel minimize;
     // End of variables declaration//GEN-END:variables
+
+    private static class MenuPesann {
+
+        public MenuPesann() {
+        }
+
+        private void setVisible(boolean b) {
+            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        }
+    }
 }
