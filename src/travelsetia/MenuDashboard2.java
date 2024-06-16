@@ -84,6 +84,9 @@ public class MenuDashboard2 extends javax.swing.JPanel {
             tabelDash.setModel(model);
             tabelDash.setDefaultEditor(Object.class, null); // Nonaktifkan pengeditan sel
             tabelDash.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // Hanya pilih satu baris
+            labelUpdatePesawat.setText("Total Pesawat: " + hitungPesawat());
+            labelUpdateCustomer.setText("Total Customer: " + hitungCustomer());
+            labelUpdateBandara.setText("Total Bandara: " + hitungBandara());
 
         } catch (SQLException ex) {
             System.out.println("Error: " + ex.getMessage());
@@ -91,9 +94,53 @@ public class MenuDashboard2 extends javax.swing.JPanel {
     }
     
     
-    private void hitungPesawat(){
-        
+     private int hitungPesawat() {
+        int totalPesawat = 0;
+        String sql = "SELECT COUNT(*) AS total FROM pesawat";
+
+        try (PreparedStatement pstmt = conn.prepareStatement(sql); ResultSet rs = pstmt.executeQuery()) {
+            if (rs.next()) {
+                totalPesawat = rs.getInt("total");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error retrieving total aircraft: " + e.getMessage());
+        }
+
+        return totalPesawat;
     }
+     
+     private int hitungBandara() {
+        int totalBandara= 0;
+        String sql = "SELECT COUNT(*) AS totalBandara FROM bandara";
+
+        try (PreparedStatement pstmt = conn.prepareStatement(sql); ResultSet rs = pstmt.executeQuery()) {
+            if (rs.next()) {
+                totalBandara = rs.getInt("totalBandara");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error retrieving total aircraft: " + e.getMessage());
+        }
+
+        return totalBandara;
+    }
+     
+     
+     private int hitungCustomer() {
+        int totalCustomer= 0;
+        String sql = "SELECT COUNT(*) AS totalCustomer FROM detail_transaksi";
+
+        try (PreparedStatement pstmt = conn.prepareStatement(sql); ResultSet rs = pstmt.executeQuery()) {
+            if (rs.next()) {
+                totalCustomer = rs.getInt("totalCustomer");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error retrieving total aircraft: " + e.getMessage());
+        }
+
+        return totalCustomer;
+    }
+     
+     
 
     
     /**
@@ -114,7 +161,7 @@ public class MenuDashboard2 extends javax.swing.JPanel {
         PanelKursi = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
-        labelUpdateKursi = new javax.swing.JLabel();
+        labelUpdateCustomer = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         PanelBandara = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
@@ -212,11 +259,11 @@ public class MenuDashboard2 extends javax.swing.JPanel {
                 .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        labelUpdateKursi.setBackground(new java.awt.Color(255, 255, 255));
-        labelUpdateKursi.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
-        labelUpdateKursi.setForeground(new java.awt.Color(255, 255, 255));
-        labelUpdateKursi.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelUpdateKursi.setText("9999");
+        labelUpdateCustomer.setBackground(new java.awt.Color(255, 255, 255));
+        labelUpdateCustomer.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        labelUpdateCustomer.setForeground(new java.awt.Color(255, 255, 255));
+        labelUpdateCustomer.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelUpdateCustomer.setText("9999");
 
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image_icon/Sitting on Chair.png"))); // NOI18N
 
@@ -225,7 +272,7 @@ public class MenuDashboard2 extends javax.swing.JPanel {
         PanelKursiLayout.setHorizontalGroup(
             PanelKursiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(labelUpdateKursi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(labelUpdateCustomer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(PanelKursiLayout.createSequentialGroup()
                 .addGap(59, 59, 59)
                 .addComponent(jLabel9)
@@ -238,7 +285,7 @@ public class MenuDashboard2 extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(labelUpdateKursi, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(labelUpdateCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -378,7 +425,7 @@ public class MenuDashboard2 extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelUpdateBandara;
-    private javax.swing.JLabel labelUpdateKursi;
+    private javax.swing.JLabel labelUpdateCustomer;
     private javax.swing.JLabel labelUpdatePesawat;
     private javax.swing.JTable tabelDash;
     // End of variables declaration//GEN-END:variables
