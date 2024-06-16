@@ -35,83 +35,67 @@ public class MenuDashboard2 extends javax.swing.JPanel {
 
         conn = Koneksi.bukaKoneksi();
         System.out.println(conn);
-        String sql = "SELECT p.idPesawat, p.namaPesawat, b.namaBandara AS kotaKeberangkatan, p.destinasi, jp.tanggalKeberangkatan, p.kursiTersedia, p.harga, p.statusKursi\n"
-                + "FROM pesawat p \n"
-                + "LEFT JOIN bandara b ON p.destinasi = b.kota\n"
-                + "LEFT JOIN jadwalpenerbangan jp ON p.idPesawat = jp.idPesawat\n";
-        try {
-            PreparedStatement pst = conn.prepareStatement(sql);
-            ResultSet rs = pst.executeQuery();
+        String sql = "SELECT j.idPenerbangan, j.bandaraKeberangkatan, j.bandaraTujuan, j.tanggalKeberangkatan, j.tanggalKedatangan, p.namaPesawat, p.harga, k.kursiTersedia "
+                + "FROM jadwalpenerbangan j "
+                + "LEFT JOIN pesawat p ON j.idPesawat = p.idPesawat "
+                + "LEFT JOIN kapasitas_kursi k ON j.idPenerbangan = k.idPenerbangan";
+        try (PreparedStatement pst = conn.prepareStatement(sql); ResultSet rs = pst.executeQuery()) {
 
+            // Inisialisasi DefaultTableModel dengan kolom yang ditentukan
             DefaultTableModel model = new DefaultTableModel();
-            model.setColumnIdentifiers(new Object[]{"ID Pesawat", "Nama Pesawat", "Kota Keberangkatan", "Destinasi", "Tanggal Keberangkatan", "Kursi Tersedia", "Harga", "Status Kursi"});
+            model.setColumnIdentifiers(new Object[]{
+                "Nomor Penerbangan",
+                "Bandara Keberangkatan",
+                "Bandara Tujuan",
+                "Maskapai",
+                "Tanggal Keberangkatan",
+                "Tanggal Kedatangan",
+                "Harga",
+                "Kursi Tersedia",
+                "Status Kursi"
+            });
 
-            int totalPesawat = 0;
-            int totalkursiTerjual = 0;
-            HashSet<String> uniqueBandara = new HashSet<>();
-            
-            
-
+            // Memproses ResultSet dan menambahkan data ke model
             while (rs.next()) {
-                int kursiTersedia = rs.getInt("kursiTersedia");
-                int idPesawat = rs.getInt("idPesawat");
-                int tiketTerjual = hitungTiketTerjual(idPesawat);
-                int kursiTersediaSetelahTerjual = kursiTersedia - tiketTerjual;
                 String statusKursi;
-                if (kursiTersediaSetelahTerjual > 0) {
+                int idPenerbangan = rs.getInt("idPenerbangan");
+
+                if (rs.getInt("kursiTersedia") > 0) {
                     statusKursi = "ada";
                 } else {
                     statusKursi = "habis";
                 }
-                
-                uniqueBandara.add(rs.getString("kotaKeberangkatan"));
-            
+
 
                 model.addRow(new Object[]{
-                    rs.getInt("idPesawat"),
+                    rs.getString("idPenerbangan"),
+                    rs.getString("bandaraKeberangkatan"),
+                    rs.getString("bandaraTujuan"),
                     rs.getString("namaPesawat"),
-                    rs.getString("kotaKeberangkatan"),
-                    rs.getString("destinasi"),
                     rs.getString("tanggalKeberangkatan"),
-                    kursiTersediaSetelahTerjual, // Menampilkan jumlah kursi tersedia setelah terjual
-                    rs.getInt("harga"),
+                    rs.getString("tanggalKedatangan"),
+                    rs.getDouble("harga"),
+                    rs.getInt("kursiTersedia"),
                     statusKursi
-                    
                 });
-                totalPesawat++;
-                totalkursiTerjual += tiketTerjual;
             }
 
+            // Set the model to your JTable
             tabelDash.setModel(model);
-            tabelDash.setDefaultEditor(Object.class, null);
+            tabelDash.setDefaultEditor(Object.class, null); // Nonaktifkan pengeditan sel
+            tabelDash.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // Hanya pilih satu baris
 
-            int totalBandara = uniqueBandara.size();
-
-            labelUpdatePesawat.setText("Total Pesawat: " + totalPesawat);
-            labelUpdateKursi.setText("Kursi Terjual:" + totalkursiTerjual);
-            labelUpdateBandara.setText("Total Bandara" + totalBandara);
-
-        } catch (Exception ex) {
-            System.out.println("Error : " + ex.getMessage());
+        } catch (SQLException ex) {
+            System.out.println("Error: " + ex.getMessage());
         }
     }
-
-    private int hitungTiketTerjual(int idPesawat) {
-        int totalTiketTerjual = 0;
-        String sql = "SELECT SUM(jumlahTiket) AS total FROM booking WHERE idPesawat = ?";
-        try {
-            PreparedStatement pst = conn.prepareStatement(sql);
-            pst.setInt(1, idPesawat);
-            ResultSet rs = pst.executeQuery();
-            if (rs.next()) {
-                totalTiketTerjual = rs.getInt("total");
-            }
-        } catch (SQLException e) {
-            System.out.println("Error retrieving total tiket terjual: " + e.getMessage());
-        }
-        return totalTiketTerjual;
+    
+    
+    private void hitungPesawat(){
+        
     }
 
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

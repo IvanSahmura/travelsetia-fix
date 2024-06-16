@@ -229,14 +229,14 @@ public class MenuPesan extends javax.swing.JFrame {
     }
     
     private void cetakTiket(){
-        if(kursiTersedia > 0){
+        if(jumlahTiket > 0){
          String message = String.format(
                         "Jumlah Tiket: %s\nTotal Harga: %s\nMaskapai: %s\nKota Keberangkatan: %s\nDestinasi: %s\nTanggal Berangkat: %s\n",
                         jumlahTiket, totalHarga, namaPesawat, bandaraKeberangkatan, bandaraTujuan, tanggalKeberangkatan
                 );
          JOptionPane.showMessageDialog(this, message, "Rincian Pembayaran", JOptionPane.INFORMATION_MESSAGE);
     } else{
-            JOptionPane.showMessageDialog(this, "Maaf, kursi untuk penerbangan ini sudah habis.", "Peringatan", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Maaf, TIket untuk penerbangan ini sudah habis.", "Peringatan", JOptionPane.WARNING_MESSAGE);
         }
     }
     

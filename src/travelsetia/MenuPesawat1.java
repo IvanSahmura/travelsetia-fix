@@ -222,6 +222,7 @@ public class MenuPesawat1 extends javax.swing.JPanel {
         tfTanggalBerangkat = new javax.swing.JTextField();
         tfkursiTersedia = new javax.swing.JTextField();
         txtTotalBayar1 = new javax.swing.JTextField();
+        tfTanggalBerangkat1 = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(53, 114, 239));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -299,7 +300,7 @@ public class MenuPesawat1 extends javax.swing.JPanel {
         add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 0, 260, 30));
 
         txtTotalBayar.setForeground(new java.awt.Color(153, 153, 153));
-        txtTotalBayar.setText("Harga");
+        txtTotalBayar.setText("Tiket");
         txtTotalBayar.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 txtTotalBayarFocusGained(evt);
@@ -330,10 +331,10 @@ public class MenuPesawat1 extends javax.swing.JPanel {
                 tfMaskapaiActionPerformed(evt);
             }
         });
-        add(tfMaskapai, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 70, 300, 70));
+        add(tfMaskapai, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 70, 300, 30));
 
         tfKotaKeberangkatan.setForeground(new java.awt.Color(153, 153, 153));
-        tfKotaKeberangkatan.setText("Kota Keberangkatan");
+        tfKotaKeberangkatan.setText("Bandara Keberangkatan");
         tfKotaKeberangkatan.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 tfKotaKeberangkatanFocusGained(evt);
@@ -347,10 +348,10 @@ public class MenuPesawat1 extends javax.swing.JPanel {
                 tfKotaKeberangkatanActionPerformed(evt);
             }
         });
-        add(tfKotaKeberangkatan, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 150, 300, 30));
+        add(tfKotaKeberangkatan, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 110, 300, 30));
 
         tfDestinasi.setForeground(new java.awt.Color(153, 153, 153));
-        tfDestinasi.setText("Destinasi");
+        tfDestinasi.setText("Bandara Kedatangan");
         tfDestinasi.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 tfDestinasiFocusGained(evt);
@@ -364,7 +365,7 @@ public class MenuPesawat1 extends javax.swing.JPanel {
                 tfDestinasiActionPerformed(evt);
             }
         });
-        add(tfDestinasi, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 190, 300, 30));
+        add(tfDestinasi, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 150, 300, 30));
 
         tfTanggalBerangkat.setForeground(new java.awt.Color(153, 153, 153));
         tfTanggalBerangkat.setText("Tanggal Keberangkatan");
@@ -376,7 +377,7 @@ public class MenuPesawat1 extends javax.swing.JPanel {
                 tfTanggalBerangkatFocusLost(evt);
             }
         });
-        add(tfTanggalBerangkat, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 70, 290, 30));
+        add(tfTanggalBerangkat, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 190, 300, 30));
 
         tfkursiTersedia.setForeground(new java.awt.Color(153, 153, 153));
         tfkursiTersedia.setText("Kursi Tersedia");
@@ -411,6 +412,18 @@ public class MenuPesawat1 extends javax.swing.JPanel {
             }
         });
         add(txtTotalBayar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 150, 290, 30));
+
+        tfTanggalBerangkat1.setForeground(new java.awt.Color(153, 153, 153));
+        tfTanggalBerangkat1.setText("Tanggal Kedatangan");
+        tfTanggalBerangkat1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                tfTanggalBerangkat1FocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                tfTanggalBerangkat1FocusLost(evt);
+            }
+        });
+        add(tfTanggalBerangkat1, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 70, 290, 30));
     }// </editor-fold>//GEN-END:initComponents
 
     private void tfkursiTersediaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfkursiTersediaActionPerformed
@@ -556,6 +569,14 @@ public class MenuPesawat1 extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTotalBayar1ActionPerformed
 
+    private void tfTanggalBerangkat1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfTanggalBerangkat1FocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfTanggalBerangkat1FocusGained
+
+    private void tfTanggalBerangkat1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfTanggalBerangkat1FocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfTanggalBerangkat1FocusLost
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonHapus;
@@ -570,6 +591,7 @@ public class MenuPesawat1 extends javax.swing.JPanel {
     private javax.swing.JTextField tfKotaKeberangkatan;
     private javax.swing.JTextField tfMaskapai;
     private javax.swing.JTextField tfTanggalBerangkat;
+    private javax.swing.JTextField tfTanggalBerangkat1;
     private javax.swing.JTextField tfkursiTersedia;
     private javax.swing.JTextField txtTotalBayar;
     private javax.swing.JTextField txtTotalBayar1;
